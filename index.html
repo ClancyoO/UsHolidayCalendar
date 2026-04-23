@@ -1,7 +1,7 @@
 <html lang="zh-CN"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>2026年节日日历</title>
+  <title>美国节日和活动日历 - Apple 风格</title>
   <!-- Tailwind CSS v3 -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Font Awesome -->
@@ -12,26 +12,25 @@
       theme: {
         extend: {
           colors: {
-            primary: '#3b82f6',
-            secondary: '#6366f1',
-            accent: '#8b5cf6',
-            federal: '#ef4444',
-            state: '#f59e0b',
-            observance: '#10b981',
-            christian: '#3b82f6',
-            jewish: '#8b5cf6',
-            muslim: '#f59e0b',
-            hindu: '#10b981',
-            orthodox: '#6366f1',
-            seasonal: '#ec4899',
-            sporting: '#14b8a6'
+            primary: '#4285F4',
+            federal: '#EA4335',
+            state: '#FBBC05',
+            observance: '#34A853',
+            christian: '#673AB7',
+            jewish: '#FF5722',
+            muslim: '#9C27B0',
+            hindu: '#009688',
+            orthodox: '#03A9F4',
+            seasonal: '#FF9800',
+            sporting: '#795548'
           },
           fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
+            sans: ['-apple-system', 'BlinkMacSystemFont', 'San Francisco', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
           },
           animation: {
             'fade-in': 'fadeIn 0.5s ease-in-out',
-            'slide-up': 'slideUp 0.3s ease-out',
+            'slide-up': 'slideUp 0.4s ease-out',
+            'scale-in': 'scaleIn 0.3s ease-out',
           },
           keyframes: {
             fadeIn: {
@@ -39,8 +38,12 @@
               '100%': { opacity: '1' },
             },
             slideUp: {
-              '0%': { transform: 'translateY(20px)', opacity: '0' },
+              '0%': { transform: 'translateY(30px)', opacity: '0' },
               '100%': { transform: 'translateY(0)', opacity: '1' },
+            },
+            scaleIn: {
+              '0%': { transform: 'scale(0.97)', opacity: '0' },
+              '100%': { transform: 'scale(1)', opacity: '1' },
             }
           }
         }
@@ -49,25 +52,11 @@
   </script>
   <style type="text/tailwindcss">
     @layer utilities {
-      .glass {
-        background: rgba(255, 255, 255, 0.25);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+      .text-balance {
+        text-wrap: balance;
       }
-      .glass-dark {
-        background: rgba(15, 23, 42, 0.75);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-      }
-      .holiday-item {
-        transition: all 0.2s ease;
-      }
-      .holiday-item:hover {
-        transform: translateX(2px);
+      .transition-smooth {
+        transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
       }
       .calendar-grid {
         display: grid;
@@ -75,20 +64,59 @@
         gap: 1px;
       }
       .calendar-day {
-        min-height: 100px;
+        min-height: 110px;
         transition: all 0.2s ease;
       }
       .calendar-day:hover {
-        background-color: rgba(243, 244, 246, 0.8);
+        background-color: rgba(0, 0, 0, 0.02);
       }
-      .text-shadow {
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      .month-nav-btn.active {
+        color: #4285F4;
+        border-bottom: 2px solid #4285F4;
       }
-      .gradient-text {
-        background-clip: text;
-        -webkit-background-clip: text;
-        color: transparent;
-        background-image: linear-gradient(45deg, #3b82f6, #8b5cf6);
+      .holiday-item {
+        transition: all 0.2s ease;
+      }
+      .holiday-item:hover {
+        transform: translateX(2px);
+      }
+      
+      /* 竖屏模式下的节日展示优化 */
+      @media (max-aspect-ratio: 1/1) {
+        .holidays-container {
+          display: flex;
+          flex-direction: column;
+          gap: 1px;
+        }
+        
+        .holiday-item {
+          writing-mode: horizontal-tb;
+          text-orientation: mixed;
+          padding: 0.25rem 0.125rem;
+          text-align: left;
+          min-height: auto;
+          max-height: 50px; /* 最多显示三行 */
+          font-size: 0.5rem; /* 保持相对正常的字体大小 */
+          overflow: hidden;
+          position: relative;
+          white-space: normal;
+          word-wrap: break-word;
+          line-height: 1.2;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+        }
+        
+        .holiday-item::after {
+          content: '';
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          height: 15px;
+          width: 100%;
+          background: linear-gradient(to top, rgba(255,255,255,0.9), transparent);
+          pointer-events: none;
+        }
       }
       .scrollbar-hide::-webkit-scrollbar {
         display: none;
@@ -97,130 +125,132 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
       }
-      .month-nav-btn.active {
-        color: #3b82f6;
-        border-bottom: 2px solid #3b82f6;
+      .backdrop-blur {
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
       }
     }
   </style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen font-sans text-gray-800">
-  <div class="container mx-auto px-4 py-8">
+<body class="bg-white min-h-screen font-sans text-gray-900">
+  <div class="container mx-auto px-4 py-8 max-w-6xl">
     <!-- 页面标题 -->
-    <header class="text-center mb-8 animate-fade-in">
-      <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-2">节日日历</h1>
-      <p class="text-lg text-gray-600">探索不同年份的节日信息，了解更多文化背景</p>
+    <header class="text-center mb-12 animate-fade-in">
+      <h1 class="text-4xl md:text-5xl font-semibold mb-3 tracking-tight">美国节日和活动日历</h1>
+      <p class="text-lg text-gray-500 max-w-2xl mx-auto text-balance">针对做美国产品的小伙伴, 直观查询不同的节日信息和消费需求, 了解更多文化背景</p>
     </header>
 
     <!-- 主要内容区域 -->
-    <div class="glass rounded-2xl p-6 mb-8 animate-fade-in" style="animation-delay: 0.1s;">
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm mb-12 animate-fade-in" style="animation-delay: 0.1s;">
       <!-- 年份选择器和搜索框 -->
-      <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+      <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4 px-6 pt-6">
         <div class="flex items-center">
-          <label for="year-select" class="mr-3 text-lg font-medium">年份:</label>
-          <select id="year-select" class="bg-white bg-opacity-70 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary">
+          <label for="year-select" class="mr-3 text-base font-medium text-gray-700">年份:</label>
+          <select id="year-select" class="bg-white border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
             <option value="2026">2026</option>
-            <option value="2027" selected="">2027</option>
+            <option value="2027">2027</option>
             <option value="2028">2028</option>
+            <option value="2029">2029</option>
+            <option value="2030">2030</option>
           </select>
         </div>
         <div class="relative w-full md:w-64">
-          <input type="text" id="holiday-search" placeholder="搜索节日..." class="w-full bg-white bg-opacity-70 border border-gray-300 rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary">
+          <input type="text" id="holiday-search" placeholder="搜索节日..." class="w-full bg-white border border-gray-300 rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
           <i class="fa fa-search absolute left-3 top-3 text-gray-400"></i>
         </div>
       </div>
 
       <!-- 月份导航 -->
-      <div class="flex overflow-x-auto scrollbar-hide mb-4 pb-2 border-b border-gray-200">
-        <div id="month-nav" class="flex space-x-6 min-w-max">
+      <div class="flex overflow-x-auto scrollbar-hide mb-6 pb-2 px-6 border-b border-gray-100">
+        <div id="month-nav" class="flex space-x-8 min-w-max">
           <!-- 月份按钮将通过JavaScript动态生成 -->
         </div>
       </div>
 
       <!-- 日历网格 -->
-      <div id="calendar-container" class="w-full">
+      <div id="calendar-container" class="w-full px-6 pb-6">
         <!-- 日历将通过JavaScript动态生成 -->
       </div>
     </div>
 
     <!-- 节日类型图例 -->
-    <div class="glass rounded-2xl p-6 mb-8 animate-fade-in" style="animation-delay: 0.2s;">
-      <h2 class="text-xl font-bold mb-4">节日类型图例</h2>
-      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm mb-12 animate-fade-in" style="animation-delay: 0.2s;">
+      <h2 class="text-xl font-semibold mb-6 px-6 pt-6">节日类型图例</h2>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 px-6 pb-6">
         <div class="flex items-center">
-          <div class="w-4 h-4 rounded-full bg-federal mr-2"></div>
-          <span>联邦假日</span>
+          <div class="w-4 h-4 rounded-full bg-federal mr-3"></div>
+          <span class="text-gray-700">联邦假日</span>
         </div>
         <div class="flex items-center">
-          <div class="w-4 h-4 rounded-full bg-state mr-2"></div>
-          <span>州假日</span>
+          <div class="w-4 h-4 rounded-full bg-state mr-3"></div>
+          <span class="text-gray-700">州假日</span>
         </div>
         <div class="flex items-center">
-          <div class="w-4 h-4 rounded-full bg-observance mr-2"></div>
-          <span>纪念日</span>
+          <div class="w-4 h-4 rounded-full bg-observance mr-3"></div>
+          <span class="text-gray-700">纪念日</span>
         </div>
         <div class="flex items-center">
-          <div class="w-4 h-4 rounded-full bg-christian mr-2"></div>
-          <span>基督教节日</span>
+          <div class="w-4 h-4 rounded-full bg-christian mr-3"></div>
+          <span class="text-gray-700">基督教节日</span>
         </div>
         <div class="flex items-center">
-          <div class="w-4 h-4 rounded-full bg-jewish mr-2"></div>
-          <span>犹太教节日</span>
+          <div class="w-4 h-4 rounded-full bg-jewish mr-3"></div>
+          <span class="text-gray-700">犹太教节日</span>
         </div>
         <div class="flex items-center">
-          <div class="w-4 h-4 rounded-full bg-muslim mr-2"></div>
-          <span>伊斯兰教节日</span>
+          <div class="w-4 h-4 rounded-full bg-muslim mr-3"></div>
+          <span class="text-gray-700">伊斯兰教节日</span>
         </div>
         <div class="flex items-center">
-          <div class="w-4 h-4 rounded-full bg-hindu mr-2"></div>
-          <span>印度教节日</span>
+          <div class="w-4 h-4 rounded-full bg-hindu mr-3"></div>
+          <span class="text-gray-700">印度教节日</span>
         </div>
         <div class="flex items-center">
-          <div class="w-4 h-4 rounded-full bg-orthodox mr-2"></div>
-          <span>东正教节日</span>
+          <div class="w-4 h-4 rounded-full bg-orthodox mr-3"></div>
+          <span class="text-gray-700">东正教节日</span>
         </div>
         <div class="flex items-center">
-          <div class="w-4 h-4 rounded-full bg-seasonal mr-2"></div>
-          <span>季节节日</span>
+          <div class="w-4 h-4 rounded-full bg-seasonal mr-3"></div>
+          <span class="text-gray-700">季节节日</span>
         </div>
         <div class="flex items-center">
-          <div class="w-4 h-4 rounded-full bg-sporting mr-2"></div>
-          <span>体育赛事</span>
+          <div class="w-4 h-4 rounded-full bg-sporting mr-3"></div>
+          <span class="text-gray-700">体育赛事</span>
         </div>
       </div>
     </div>
 
     <!-- 页脚 -->
-    <footer class="text-center text-gray-600 mt-12 pb-8">
-      <p>© 2026 - ** 节日日历 | by wending</p>
+    <footer class="text-center text-gray-500 mt-16 pb-8">
+      <p>© 2026 - 2029 节日日历 | by Wending | VX:W1036527153</p>
     </footer>
   </div>
 
   <!-- 节日详情模态框 -->
   <div id="holiday-modal" class="fixed inset-0 flex items-center justify-center z-50 hidden">
-    <div class="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm" id="modal-backdrop"></div>
-    <div class="glass-dark rounded-2xl p-8 max-w-md w-full mx-4 z-10 animate-slide-up">
-      <div class="flex justify-between items-start mb-4">
-        <h3 id="modal-title" class="text-2xl font-bold text-white"></h3>
-        <button id="close-modal" class="text-gray-300 hover:text-white focus:outline-none">
+    <div class="absolute inset-0 bg-black bg-opacity-50 backdrop-blur" id="modal-backdrop"></div>
+    <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 z-10 animate-scale-in shadow-xl">
+      <div class="flex justify-between items-start mb-6">
+        <h3 id="modal-title" class="text-2xl font-semibold text-gray-900"></h3>
+        <button id="close-modal" class="text-gray-400 hover:text-gray-600 focus:outline-none transition-smooth">
           <i class="fa fa-times text-xl"></i>
         </button>
       </div>
-      <div class="mb-4">
-        <p id="modal-date" class="text-gray-300 mb-2"></p>
+      <div class="mb-6">
+        <p id="modal-date" class="text-gray-500 mb-3"></p>
         <div id="modal-type" class="inline-block px-3 py-1 rounded-full text-sm font-medium mb-4"></div>
       </div>
       <div class="mb-6">
-        <h4 class="text-lg font-semibold text-white mb-2">英文名称</h4>
-        <p id="modal-english-name" class="text-gray-300"></p>
+        <h4 class="text-base font-medium text-gray-700 mb-2">英文名称</h4>
+        <p id="modal-english-name" class="text-gray-600"></p>
       </div>
       <div class="mb-6">
-        <h4 class="text-lg font-semibold text-white mb-2">节日介绍</h4>
-        <p id="modal-description" class="text-gray-300"></p>
+        <h4 class="text-base font-medium text-gray-700 mb-2">节日介绍</h4>
+        <p id="modal-description" class="text-gray-600 leading-relaxed"></p>
       </div>
       <div>
-        <h4 class="text-lg font-semibold text-white mb-2">适用地区</h4>
-        <p id="modal-details" class="text-gray-300"></p>
+        <h4 class="text-base font-medium text-gray-700 mb-2">适用地区</h4>
+        <p id="modal-details" class="text-gray-600"></p>
       </div>
     </div>
   </div>
@@ -245,9 +275,12 @@
     const modalDescription = document.getElementById('modal-description');
     const modalDetails = document.getElementById('modal-details');
 
-    // 当前选择的年份和月份
-    let currentYear = 2027;
-    let currentMonth = 0; // 0 = 一月
+    // 获取当前日期
+    const today = new Date();
+    
+    // 当前选择的年份和月份（默认为当前日期）
+    let currentYear = today.getFullYear();
+    let currentMonth = today.getMonth(); // 0 = 一月
 
     // 月份名称
     const monthNames = [
@@ -260,6 +293,9 @@
 
     // 初始化页面
     function initPage() {
+      // 设置年份选择器的默认值
+      yearSelect.value = currentYear.toString();
+      
       // 生成月份导航按钮
       generateMonthNav();
       
@@ -276,7 +312,7 @@
       
       for (let i = 0; i < 12; i++) {
         const monthBtn = document.createElement('button');
-        monthBtn.className = `month-nav-btn py-2 px-1 text-center transition-all ${i === currentMonth ? 'active font-medium' : 'text-gray-500 hover:text-gray-800'}`;
+        monthBtn.className = `month-nav-btn py-2 px-1 text-center transition-smooth ${i === currentMonth ? 'active font-medium' : 'text-gray-500 hover:text-gray-900'}`;
         monthBtn.textContent = monthNames[i];
         monthBtn.dataset.month = i;
         
@@ -287,10 +323,10 @@
           // 更新月份按钮样式
           document.querySelectorAll('.month-nav-btn').forEach(btn => {
             btn.classList.remove('active', 'font-medium');
-            btn.classList.add('text-gray-500', 'hover:text-gray-800');
+            btn.classList.add('text-gray-500', 'hover:text-gray-900');
           });
           monthBtn.classList.add('active', 'font-medium');
-          monthBtn.classList.remove('text-gray-500', 'hover:text-gray-800');
+          monthBtn.classList.remove('text-gray-500', 'hover:text-gray-900');
           
           // 重新生成日历
           generateCalendar();
@@ -313,7 +349,7 @@
       
       // 创建月份标题
       const monthTitle = document.createElement('h2');
-      monthTitle.className = 'text-xl font-bold mb-4';
+      monthTitle.className = 'text-xl font-semibold mb-6';
       monthTitle.textContent = `${monthNames[currentMonth]} ${currentYear}`;
       calendarWrapper.appendChild(monthTitle);
       
@@ -323,7 +359,7 @@
       
       for (const day of weekDayNames) {
         const dayCell = document.createElement('div');
-        dayCell.className = 'text-center py-2 text-sm font-medium text-gray-500 bg-gray-100 bg-opacity-50';
+        dayCell.className = 'text-center py-3 text-sm font-medium text-gray-500 bg-gray-50';
         dayCell.textContent = day;
         weekHeader.appendChild(dayCell);
       }
@@ -341,17 +377,17 @@
       
       // 创建日期网格
       const daysGrid = document.createElement('div');
-      daysGrid.className = 'calendar-grid bg-white bg-opacity-70 rounded-lg overflow-hidden';
+      daysGrid.className = 'calendar-grid bg-white border border-gray-100 rounded-lg overflow-hidden';
       
       // 添加上个月的占位日期
       for (let i = 0; i < firstDay; i++) {
         const prevMonthDay = daysInPrevMonth - firstDay + i + 1;
         const emptyCell = document.createElement('div');
-        emptyCell.className = 'calendar-day p-2 border border-gray-100 bg-gray-50';
+        emptyCell.className = 'calendar-day p-3 border border-gray-100 bg-gray-50';
         
         // 日期数字
         const dateNumber = document.createElement('div');
-        dateNumber.className = 'text-right text-gray-400 text-sm';
+        dateNumber.className = 'text-right text-gray-400 text-base';
         dateNumber.textContent = prevMonthDay;
         emptyCell.appendChild(dateNumber);
         
@@ -367,7 +403,7 @@
         const dayHolidays = yearHolidays.filter(holiday => holiday.date === dateStr);
         
         const dayCell = document.createElement('div');
-        dayCell.className = 'calendar-day p-2 border border-gray-100';
+        dayCell.className = 'calendar-day p-3 border border-gray-100';
         
         // 日期数字
         const dateNumber = document.createElement('div');
@@ -378,13 +414,13 @@
         // 如果有节日，添加节日信息
         if (dayHolidays.length > 0) {
           const holidaysContainer = document.createElement('div');
-          holidaysContainer.className = 'mt-2 space-y-1';
+          holidaysContainer.className = 'mt-2 holidays-container';
           
           dayHolidays.forEach(holiday => {
             const holidayItem = document.createElement('div');
             const typeClass = getTypeClass(holiday.type);
             
-            holidayItem.className = `holiday-item text-xs p-1 rounded ${typeClass} text-white break-words cursor-pointer`;
+            holidayItem.className = `holiday-item text-xs p-1.5 rounded ${typeClass} text-white break-words cursor-pointer`;
             holidayItem.textContent = holiday.chineseName;
             holidayItem.title = holiday.chineseName;
             holidayItem.dataset.holiday = JSON.stringify(holiday);
@@ -411,11 +447,11 @@
       // 添加下个月的占位日期
       for (let i = 1; i <= remainingCells; i++) {
         const emptyCell = document.createElement('div');
-        emptyCell.className = 'calendar-day p-2 border border-gray-100 bg-gray-50';
+        emptyCell.className = 'calendar-day p-3 border border-gray-100 bg-gray-50';
         
         // 日期数字
         const dateNumber = document.createElement('div');
-        dateNumber.className = 'text-right text-gray-400 text-sm';
+        dateNumber.className = 'text-right text-gray-400 text-base';
         dateNumber.textContent = i;
         emptyCell.appendChild(dateNumber);
         
@@ -498,152 +534,109 @@
         currentYear = parseInt(yearSelect.value);
         generateCalendar();
       });
-      
+
       // 搜索框输入事件
-      holidaySearch.addEventListener('input', handleSearch);
-      
+      holidaySearch.addEventListener('input', () => {
+        const searchTerm = holidaySearch.value.toLowerCase();
+        
+        // 如果搜索框为空，显示完整日历
+        if (!searchTerm) {
+          generateCalendar();
+          return;
+        }
+        
+        // 获取当前年份的节日数据
+        const yearHolidays = holidays[currentYear.toString()] || [];
+        
+        // 过滤匹配的节日
+        const matchedHolidays = yearHolidays.filter(holiday => 
+          holiday.chineseName.toLowerCase().includes(searchTerm) || 
+          holiday.name.toLowerCase().includes(searchTerm) ||
+          holiday.description.toLowerCase().includes(searchTerm)
+        );
+        
+        // 显示搜索结果
+        displaySearchResults(matchedHolidays);
+      });
+
       // 关闭模态框事件
       closeModal.addEventListener('click', () => {
         holidayModal.classList.add('hidden');
         document.body.style.overflow = ''; // 恢复背景滚动
       });
-      
+
+      // 点击模态框背景关闭事件
       modalBackdrop.addEventListener('click', () => {
         holidayModal.classList.add('hidden');
         document.body.style.overflow = ''; // 恢复背景滚动
       });
-      
-      // 键盘事件
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && !holidayModal.classList.contains('hidden')) {
-          holidayModal.classList.add('hidden');
-          document.body.style.overflow = ''; // 恢复背景滚动
-        }
+
+      // 防止点击模态框内容时关闭模态框
+      document.querySelector('#holiday-modal > div:last-child').addEventListener('click', (e) => {
+        e.stopPropagation();
       });
     }
 
-    // 处理搜索功能
-    function handleSearch() {
-      const searchTerm = holidaySearch.value.toLowerCase().trim();
-      
-      if (!searchTerm) {
-        // 如果搜索框为空，恢复正常显示
-        generateCalendar();
-        return;
-      }
-      
-      // 获取当前年份的节日数据
-      const yearHolidays = holidays[currentYear.toString()] || [];
-      
-      // 过滤匹配的节日
-      const matchedHolidays = yearHolidays.filter(holiday => 
-        holiday.chineseName.toLowerCase().includes(searchTerm) || 
-        holiday.name.toLowerCase().includes(searchTerm)
-      );
-      
-      // 如果没有匹配的节日，显示提示信息
-      if (matchedHolidays.length === 0) {
-        calendarContainer.innerHTML = `
-          <div class="text-center py-12">
-            <i class="fa fa-search text-4xl text-gray-300 mb-4"></i>
-            <p class="text-xl text-gray-500">未找到匹配的节日</p>
-          </div>
-        `;
-        return;
-      }
-      
-      // 显示匹配的节日
+    // 显示搜索结果
+    function displaySearchResults(holidays) {
       calendarContainer.innerHTML = '';
       
-      // 按日期分组
-      const holidaysByDate = {};
-      matchedHolidays.forEach(holiday => {
-        if (!holidaysByDate[holiday.date]) {
-          holidaysByDate[holiday.date] = [];
-        }
-        holidaysByDate[holiday.date].push(holiday);
-      });
-      
       // 创建搜索结果容器
-      const searchResultsContainer = document.createElement('div');
-      searchResultsContainer.className = 'w-full';
+      const resultsWrapper = document.createElement('div');
+      resultsWrapper.className = 'w-full';
       
       // 创建搜索结果标题
-      const searchResultsTitle = document.createElement('h2');
-      searchResultsTitle.className = 'text-xl font-bold mb-4';
-      searchResultsTitle.textContent = `搜索结果: "${searchTerm}"`;
-      searchResultsContainer.appendChild(searchResultsTitle);
+      const resultsTitle = document.createElement('h2');
+      resultsTitle.className = 'text-xl font-semibold mb-4';
+      resultsTitle.textContent = `搜索结果 (${holidays.length})`;
+      resultsWrapper.appendChild(resultsTitle);
       
-      // 创建节日列表
-      const holidayList = document.createElement('div');
-      holidayList.className = 'space-y-3';
+      // 如果没有匹配的节日
+      if (holidays.length === 0) {
+        const noResults = document.createElement('p');
+        noResults.className = 'text-gray-500 py-8 text-center';
+        noResults.textContent = '没有找到匹配的节日';
+        resultsWrapper.appendChild(noResults);
+        calendarContainer.appendChild(resultsWrapper);
+        return;
+      }
       
-      // 按日期排序
-      const sortedDates = Object.keys(holidaysByDate).sort();
+      // 创建结果列表
+      const resultsList = document.createElement('div');
+      resultsList.className = 'space-y-3';
       
-      sortedDates.forEach(date => {
-        const dateHolidays = holidaysByDate[date];
-        const dateObj = new Date(date);
+      holidays.forEach(holiday => {
+        const holidayItem = document.createElement('div');
+        const typeClass = getTypeClass(holiday.type);
         
-        // 创建日期分组
-        const dateGroup = document.createElement('div');
-        dateGroup.className = 'bg-white bg-opacity-70 rounded-lg p-4';
+        // 格式化日期显示
+        const date = new Date(holiday.date);
+        const dateStr = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
         
-        // 日期标题
-        const dateTitle = document.createElement('h3');
-        dateTitle.className = 'text-lg font-medium mb-3 text-gray-700';
-        dateTitle.textContent = `${dateObj.getFullYear()}年${dateObj.getMonth() + 1}月${dateObj.getDate()}日`;
-        dateGroup.appendChild(dateTitle);
+        holidayItem.className = 'flex items-center justify-between p-4 bg-white border border-gray-100 rounded-lg hover:bg-gray-50 transition-smooth cursor-pointer';
+        holidayItem.innerHTML = `
+          <div>
+            <div class="flex items-center">
+              <span class="inline-block w-3 h-3 rounded-full ${typeClass} mr-3"></span>
+              <h3 class="font-medium">${holiday.chineseName}</h3>
+            </div>
+            <p class="text-sm text-gray-500 mt-1">${dateStr} · ${holiday.name}</p>
+          </div>
+          <i class="fa fa-chevron-right text-gray-400"></i>
+        `;
         
-        // 节日列表
-        const dateHolidayList = document.createElement('div');
-        dateHolidayList.className = 'space-y-2';
-        
-        dateHolidays.forEach(holiday => {
-          const holidayItem = document.createElement('div');
-          const typeClass = getTypeClass(holiday.type);
-          
-          holidayItem.className = `flex items-center justify-between p-3 rounded-lg ${typeClass} text-white cursor-pointer hover:opacity-90 transition-opacity`;
-          holidayItem.dataset.holiday = JSON.stringify(holiday);
-          
-          const holidayInfo = document.createElement('div');
-          holidayInfo.className = 'flex-1';
-          
-          const chineseName = document.createElement('div');
-          chineseName.className = 'font-medium';
-          chineseName.textContent = holiday.chineseName;
-          
-          const englishName = document.createElement('div');
-          englishName.className = 'text-sm opacity-80';
-          englishName.textContent = holiday.name;
-          
-          holidayInfo.appendChild(chineseName);
-          holidayInfo.appendChild(englishName);
-          
-          const holidayType = document.createElement('div');
-          holidayType.className = 'text-xs bg-white bg-opacity-20 px-2 py-1 rounded-full';
-          holidayType.textContent = getTypeText(holiday.type);
-          
-          holidayItem.appendChild(holidayInfo);
-          holidayItem.appendChild(holidayType);
-          
-          // 添加点击事件
-          holidayItem.addEventListener('click', () => {
-            showHolidayDetails(holiday);
-          });
-          
-          dateHolidayList.appendChild(holidayItem);
+        holidayItem.addEventListener('click', () => {
+          showHolidayDetails(holiday);
         });
         
-        dateGroup.appendChild(dateHolidayList);
-        holidayList.appendChild(dateGroup);
+        resultsList.appendChild(holidayItem);
       });
       
-      searchResultsContainer.appendChild(holidayList);
-      calendarContainer.appendChild(searchResultsContainer);
+      resultsWrapper.appendChild(resultsList);
+      calendarContainer.appendChild(resultsWrapper);
     }
 
-    // 初始化页面
+    // 页面加载完成后初始化
     document.addEventListener('DOMContentLoaded', initPage);
   </script>
 
